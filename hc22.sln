@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hc_svr", "hc_svr\hc_svr.csproj", "{C6AC6FB9-E60B-487E-9DBB-F5C992200289}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE4BD700-BD80-4D51-8D6E-644441C8FD43}"
+	ProjectSection(SolutionItems) = preProject
+		hc_engine.cs = hc_engine.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hc_client", "hc_client\hc_client.csproj", "{2F94709D-620B-4033-9543-B4F963A1BFEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6AC6FB9-E60B-487E-9DBB-F5C992200289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6AC6FB9-E60B-487E-9DBB-F5C992200289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6AC6FB9-E60B-487E-9DBB-F5C992200289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6AC6FB9-E60B-487E-9DBB-F5C992200289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F94709D-620B-4033-9543-B4F963A1BFEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F94709D-620B-4033-9543-B4F963A1BFEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F94709D-620B-4033-9543-B4F963A1BFEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F94709D-620B-4033-9543-B4F963A1BFEA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CC97EED-8680-40FD-B816-5E6FD0A1838A}
+	EndGlobalSection
+EndGlobal

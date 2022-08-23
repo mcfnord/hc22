@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "hc_client": {
+      "commandName": "Project",
+      "commandLineArgs": "localhost:5049 abc Black"
+    }
+  }
+}
