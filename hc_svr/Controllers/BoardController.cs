@@ -580,9 +580,9 @@ namespace hcsv2020.Controllers
                     return BadRequest();
                 VisualBoardStore.MakeCertainGameExists(gameId);
 
-                System.IO.Stream req = Request.Body;
+//                System.IO.Stream req = Request.Body;
                 //     req.Seek(0, System.IO.SeekOrigin.Begin);
-                string json = new System.IO.StreamReader(req).ReadToEnd();
+                string json = new System.IO.StreamReader(Request.Body).ReadToEnd();
                 var pieces = System.Text.Json.JsonSerializer.Deserialize<List<Spot>>(json);
 
                 HexC.Board bProposed = new HexC.Board();
