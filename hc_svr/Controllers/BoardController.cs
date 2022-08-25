@@ -515,7 +515,8 @@ namespace hcsv2020.Controllers
         private static System.Threading.Mutex m_serializerMutex = new System.Threading.Mutex();
 
 
-        /*  THIS WON'T COMPILE IN UPGRADE TO HC22 SO TEMPORARILY PULLING IT OFFLINE.
+        ///*  THIS WON'T COMPILE IN UPGRADE TO HC22 SO TEMPORARILY PULLING IT OFFLINE.
+        [Route("CreateScenario")]
         [HttpPost]
         public IActionResult CreateScenario([FromQuery] string gameId, [FromQuery] string whoseTurn)
         {
@@ -525,7 +526,8 @@ namespace hcsv2020.Controllers
                 if (null == gameId)
                     return BadRequest();
 
-                // a scenario creates a gameId that doesn't exist, with a board setup and whoseTurn specified by json in the body
+                // a scenario creates a gameId that doesn't exist,
+                // with a board setup and whoseTurn specified by json in the body
                 // visualBoardStore has no way to create 
                 bool fSuccess = false;
                 if (false == VisualBoardStore.ContainsGame(gameId))
@@ -555,8 +557,7 @@ namespace hcsv2020.Controllers
             }
             finally { m_serializerMutex.ReleaseMutex(); }
         }
-        */
-
+        
 
 
         // Receive moves that constitute a player's turn, but only accept them if they're confirmed to be a valid outcome.
