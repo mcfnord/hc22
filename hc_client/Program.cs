@@ -128,7 +128,7 @@ namespace HexCClient
                 string contents = File.ReadAllText(args[3]);
                 //                string json = JsonConvert.SerializeObject(contents, Formatting.Indented);
                 var httpContent = new StringContent(contents);
-                var createScenarioResult = await client.PostAsync($"http://{args[0]}/Board/CreateScenario?gameId={args[1]}&whoseTurn={args[2]}", httpContent);
+                var createScenarioResult = await client.PostAsync($"http://{args[0]}/CreateScenario?gameId={args[1]}&whoseTurn={args[2]}", httpContent);
             }
 
             while (true)
@@ -153,10 +153,12 @@ namespace HexCClient
                     b = new Board();
                     foreach (Spot s in pieces)
                     {
-                        //                        if (s.Q == 99)
-                        //                            b.Add(new Piece(FromString.PieceFromString(s.Piece), FromString.ColorFromString(s.Color)));
-                        //                        else
-                        b.Add(new PlacedPiece(FromString.PieceFromString(s.Piece), FromString.ColorFromString(s.Color), s.Q, s.R));
+                        if (s.Q == 99)
+                            b.SidelinedPieces.Add(new Piece(FromString.PieceFromString(s.Piece), FromString.ColorFromString(s.Color)));
+                        else
+                            //                            b.Add(new Piece(FromString.PieceFromString(s.Piece), FromString.ColorFromString(s.Color)));
+                            //                        else
+                            b.Add(new PlacedPiece(FromString.PieceFromString(s.Piece), FromString.ColorFromString(s.Color), s.Q, s.R));
                     }
 
                     turnStartBoard = new Board(b); // clone this
@@ -272,7 +274,12 @@ namespace HexCClient
                                 var centerPiece = turnStartBoard.AnyoneThere(new BoardLocation(0, 0));
                                 if (null != centerPiece)
                                     if (centerPiece.Color == whose)
-                                        b.Remove(centerPiece);
+                                    {
+                                        // my TURN might have moved this out.
+                                        // let's confirm there's a center piece.
+                                        if(null != b.AnyoneThere(new BoardLocation(0,0)))
+                                            b.Remove(centerPiece);
+                                    }
 
                                 PrettyJsonBoard pjb = new PrettyJsonBoard(b.PlacedPieces, b.SidelinedPieces);
                                 //                                HttpContent content = new StringContent(JsonConvert.SerializeObject(pjb), System.Text.Encoding.UTF8, "application/json");
@@ -292,7 +299,7 @@ namespace HexCClient
                             if (cki.KeyChar.ToString().ToLower() == "+")
                             {
                                 HttpContent content = new StringContent("", System.Text.Encoding.UTF8, "application/json");
-                                await client.PostAsync($"http://{args[0]}/Board/RollBackOne?gameId={args[1]}", content);
+                                await client.PostAsync($"http://{args[0]}/RollBackOne?gameId={args[1]}", content);
                             }
                             break;
 
@@ -351,8 +358,11 @@ namespace HexCClient
                                     b.Remove(portalPiece);
 
                                 // remove the original piece.
+                                // UNLESS it's already removed (because it was the portalPiece in the last step)
+                                if (false == pieceAtOrigin.Location.IsPortal)
+                                    b.Remove(pieceAtOrigin);
+
                                 // and wtf is cursor?
-                                b.Remove(pieceAtOrigin);
                                 if (false == cursor.IsPortal)
                                 {
                                     PlacedPiece ppNew = new PlacedPiece(pieceAtOrigin, cursor);
