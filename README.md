@@ -1,6 +1,6 @@
 # Hexagonal Chess
 
-This contains server code, a text-based client, and a draft of an AI player.
+This contains server code, a text-based client, and a draft of an AI player (after I migrate it from hc or hc_archive).
 
 ## Winning
 
