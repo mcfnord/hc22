@@ -202,7 +202,13 @@ namespace HexCClient
                         ShowTextBoard(b, cursor); // cursor could be null
 
                         Console.WriteLine();
-                        Console.WriteLine("134679 : Move Cursor\r\n5 : Select\r\nR : Reset to turn start\r\nF : Finish turn\r\nB : Back one move (if possible)\r\nD : Show/hide debug details");
+                        Console.WriteLine(
+                            "134679 : Move Cursor\r\n" + 
+                            "5 : Select\r\n" + 
+                            "0 : Reset to turn start\r\n" + 
+                            "+ : Finish turn\r\n" + 
+                            "- : Back one move (if possible)\r\n" + 
+                            "/ : Show/hide debug details");
 
                         if (m_showDebug)
                         {
@@ -256,7 +262,7 @@ namespace HexCClient
 
                     switch (cki.KeyChar.ToString().ToLower()[0])
                     {
-                        case 'f':
+                        case '+':
                             {
                                 var whoseTurnBefore = await client.GetStringAsync($"http://{args[0]}/WhoseTurn?gameId={args[1]}");
 
@@ -276,28 +282,28 @@ namespace HexCClient
                                 // ok, the event occurred... now ask whose turn it is! That's how we know if the turn was accepted!
                                 m_whoseTurnItIs = await client.GetStringAsync($"http://{args[0]}/WhoseTurn?gameId={args[1]}");
                                 if (whoseTurnBefore == m_whoseTurnItIs)
-                                    goto case 'r'; // failed. just reset the turn.
+                                    goto case '0'; // failed. just reset the turn.
                                 turnStartBoard = new Board(b);  // clone it! cuz it's a new turn!
                                 break;
                             }
-                        case 'b':
-                            Console.WriteLine("Permanently step back one move? Y/N");
+                        case '-':
+                            Console.WriteLine("Permanently step back one move? +/-");
                             cki = Console.ReadKey();
-                            if (cki.KeyChar.ToString().ToLower() == "y")
+                            if (cki.KeyChar.ToString().ToLower() == "+")
                             {
                                 HttpContent content = new StringContent("", System.Text.Encoding.UTF8, "application/json");
                                 await client.PostAsync($"http://{args[0]}/Board/RollBackOne?gameId={args[1]}", content);
                             }
                             break;
 
-                        case 'r': b = new Board(turnStartBoard); break;
+                        case '0': b = new Board(turnStartBoard); break;
                         case '1': cursor = ShiftedSpot(cursor, -1, 1); break;
                         case '3': cursor = ShiftedSpot(cursor, 0, 1); break;
                         case '4': cursor = ShiftedSpot(cursor, -1, 0); break;
                         case '6': cursor = ShiftedSpot(cursor, 1, 0); break;
                         case '7': cursor = ShiftedSpot(cursor, 0, -1); break;
                         case '9': cursor = ShiftedSpot(cursor, 1, -1); break;
-                        case 'd': m_showDebug = (m_showDebug ? false : true); break;
+                        case '/': m_showDebug = (m_showDebug ? false : true); break;
                         case '5':
                             if (null == selected)
                             {
